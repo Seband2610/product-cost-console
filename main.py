@@ -18,6 +18,11 @@ if opcion == "1":
     nombre= input("Ingresa el nombre del producto: ")
     cantidad= int(input("Ingresa la cantidad de productos: "))
     precio= float( input("Ingresa el precio del producto: "))
+    costo_total= precio * cantidad
+    print("producto: ", nombre)
+    print("cantidad: ", cantidad)
+    print("precio: ", precio)
+    print("costo_total: ", costo_total)
 
     producto = {
 
