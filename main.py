@@ -20,6 +20,12 @@ def opcion(opcion_del_usuario):
         productos.append(producto)
         print("Producto agregado correctamente")
 
+def opcion_2(opcion_del_usuario):
+    if opcion_del_usuario == "2":
+        print("A continuacion veras la lista de productos")
+        for producto in productos:
+            print(producto["nombre"])
+
 
 #inicio del programa
 print("Inventario de productos")
@@ -37,12 +43,10 @@ print("0. Salir")
 #Llama a la funcion
 menu_elegido=input("Ingrese una opcion: ")
 opcion(menu_elegido)
+opcion_2(menu_elegido)
 
 
-if opcion == "2":
-    print("A continuacion veras la lista de productos")
-    for producto in productos:
-        print(producto["nombre"])
+
 
         
 
