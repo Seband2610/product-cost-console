@@ -44,6 +44,8 @@ if opcion == "2":
     for producto in productos:
         print(producto["nombre"])
 
+        
+
 
 
  
