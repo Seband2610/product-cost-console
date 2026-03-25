@@ -5,7 +5,7 @@
 productos = []
 
 # Funcion para agregar productos
-def opcion(opcion_del_usuario):
+def opcion_1(opcion_del_usuario):
     if opcion_del_usuario == "1":
         print("Aqui registraras el producto")
         
@@ -111,7 +111,24 @@ def opcion_4(opcion_del_usuario):
         if not encontrado:
             print("El producto no existe")
 
+def opcion_5 (opcion_del_usuario):
+    if opcion_del_usuario == "5":
+        nombre_buscar= input("Ingresa el nombre del producto que desea buscar: ")
+        for producto in productos:
+            if producto ["nombre"] == nombre_buscar:
+                print(f"El producto fue encontrado: {producto ["nombre"]}")
+                return
+            
+            else:
+                print("Este producto no se encuentra")
+            
+def opcion_6 (opcion_del_usuario):
+    if opcion_del_usuario == "6":
+        actualizar_producto = input("Ingresa el nombre del producto que desea actualizar: ")    
+     
 
+
+    
 # Inicio del programa
 print("Inventario de productos")
 
@@ -122,6 +139,8 @@ while True:
     print("2. Ver productos")
     print("3. Ver estadisticas")
     print("4. Eliminar productos")
+    print("5. Buscar producto")
+    print("6. Actualizar producto")
     print("0. Salir")
 
     # Pedir opcion al usuario
@@ -133,10 +152,12 @@ while True:
         break
 
     # Llamar funciones segun opcion
-    opcion(menu_elegido)
+    opcion_1(menu_elegido)
     opcion_2(menu_elegido)
     opcion_3(menu_elegido)
     opcion_4(menu_elegido)
+    opcion_5(menu_elegido)
+    opcion_6(menu_elegido)
 
 
 # Fin del programa
