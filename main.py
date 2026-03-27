@@ -1,7 +1,5 @@
 # Sistema de Inventario en Consola
-# Este programa deja agregar productos, verlos y calcular datos basicos
 
-# Lista donde se guardan los productos
 productos = []
 
 # Funcion para agregar productos
@@ -9,158 +7,245 @@ def opcion_1(opcion_del_usuario):
     if opcion_del_usuario == "1":
         print("Aqui registraras el producto")
         
-        # Pedir datos al usuario
         nombre = input("Ingresa el nombre del producto: ")
         
-        # Validar cantidad
         while True:
             try:
                 cantidad = int(input("Ingresa la cantidad de productos: "))
+                if cantidad < 0:
+                    print("Error: no puede ser negativo")
+                    continue
                 break
             except:
                 print("Error: ingresa un numero entero valido")
         
-        # Validar precio
         while True:
             try:
                 precio = float(input("Ingresa el precio del producto: "))
+                if precio < 0:
+                    print("Error: no puede ser negativo")
+                    continue
                 break
             except:
                 print("Error: ingresa un numero valido")
         
-        # Calcular costo total
-        costo_total = precio * cantidad
-        
-        # Mostrar datos ingresados
-        print(f"Producto: {nombre}")
-        print(f"Cantidad: {cantidad}")
-        print(f"Precio: {precio}")
-        print(f"Costo total: {costo_total}")
-
-        # Guardar producto en un diccionario
         producto = {
             "nombre": nombre,
             "precio": precio,
             "cantidad": cantidad,
         }
 
-        # Agregar el producto a la lista
         productos.append(producto)
         print("Producto agregado correctamente")
 
 
-# Funcion para mostrar todos los productos
+# Mostrar productos
 def opcion_2(opcion_del_usuario):
     if opcion_del_usuario == "2":
-        print("A continuacion veras la lista de productos:")
 
-        # Verificar si no hay productos
         if not productos:
-            print("No hay productos en el inventario")
+            print("No hay productos")
             return
 
-        # Recorrer la lista y mostrar cada producto
         for producto in productos:
-            print(f"Producto: {producto['nombre']} | Precio: {producto['precio']} | Cantidad: {producto['cantidad']}")
+            print(f"{producto['nombre']} | {producto['precio']} | {producto['cantidad']}")
 
 
-# Funcion para calcular estadisticas
+# Estadisticas
 def opcion_3(opcion_del_usuario):
     if opcion_del_usuario == "3":
 
-        # Verificar si la lista esta vacia
         if not productos:
-            print("No hay productos en el inventario")
+            print("No hay productos")
             return
         
         total_cantidad = 0
         total_valor = 0
 
-        # Recorrer productos para hacer los calculos
+        producto_mas_caro = productos[0]
+        producto_mayor_stock = productos[0]
+
         for producto in productos:
             total_cantidad += producto["cantidad"]
             total_valor += producto["precio"] * producto["cantidad"]
 
-        # Mostrar resultados
-        print(f"Total de productos: {len(productos)}")
-        print(f"Suma total de cantidades: {total_cantidad}")
-        print(f"Valor total del inventario: {total_valor}")
-        
+            if producto["precio"] > producto_mas_caro["precio"]:
+                producto_mas_caro = producto
 
-# Funcion para eliminar un producto
+            if producto["cantidad"] > producto_mayor_stock["cantidad"]:
+                producto_mayor_stock = producto
+
+        print(f"Total productos: {len(productos)}")
+        print(f"Total unidades: {total_cantidad}")
+        print(f"Valor total: {total_valor}")
+        print(f"Mas caro: {producto_mas_caro['nombre']}")
+        print(f"Mayor stock: {producto_mayor_stock['nombre']}")
+
+
+# Eliminar
 def opcion_4(opcion_del_usuario):
     if opcion_del_usuario == "4":
 
-        # Verifica si hay productos
         if not productos:
             print("No hay productos")
             return
 
-        nombre_buscar = input("Ingresa el nombre del producto a eliminar: ")
+        nombre_buscar = input("Producto a eliminar: ")
         encontrado = False
 
-        # Recorre la lista
         for producto in productos:
             if producto["nombre"] == nombre_buscar:
                 productos.remove(producto)
-                print("Producto eliminado")
+                print("Eliminado")
                 encontrado = True
                 break
 
-        # Si no lo encontró
         if not encontrado:
-            print("El producto no existe")
+            print("No existe")
 
-def opcion_5 (opcion_del_usuario):
+
+# Buscar
+def opcion_5(opcion_del_usuario):
     if opcion_del_usuario == "5":
-        nombre_buscar= input("Ingresa el nombre del producto que desea buscar: ")
+
+        nombre_buscar = input("Producto a buscar: ")
+        encontrado = False
+
         for producto in productos:
-            if producto ["nombre"] == nombre_buscar:
-                print(f"El producto fue encontrado: {producto ["nombre"]}")
-                return
-            
-            else:
-                print("Este producto no se encuentra")
-            
-def opcion_6 (opcion_del_usuario):
+            if producto["nombre"] == nombre_buscar:
+                print(f"{producto['nombre']} | {producto['precio']} | {producto['cantidad']}")
+                encontrado = True
+
+        if not encontrado:
+            print("No encontrado")
+
+
+# Actualizar
+def opcion_6(opcion_del_usuario):
     if opcion_del_usuario == "6":
-        actualizar_producto = input("Ingresa el nombre del producto que desea actualizar: ")    
-     
+
+        nombre_buscar = input("Producto a actualizar: ")
+        encontrado = False
+
+        for producto in productos:
+            if producto["nombre"] == nombre_buscar:
+
+                # Validar nuevo precio
+                while True:
+                    try:
+                        nuevo_precio = float(input("Nuevo precio: "))
+                        if nuevo_precio < 0:
+                            print("Error: no puede ser negativo")
+                            continue
+                        break
+                    except:
+                        print("Error: ingresa un numero valido")
+
+                # Validar nueva cantidad
+                while True:
+                    try:
+                        nueva_cantidad = int(input("Nueva cantidad: "))
+                        if nueva_cantidad < 0:
+                            print("Error: no puede ser negativo")
+                            continue
+                        break
+                    except:
+                        print("Error: ingresa un numero entero valido")
+
+                producto["precio"] = nuevo_precio
+                producto["cantidad"] = nueva_cantidad
+
+                print("Actualizado")
+                encontrado = True
+                break
+
+        if not encontrado:
+            print("No encontrado")
 
 
-    
-# Inicio del programa
-print("Inventario de productos")
+# Guardar CSV
+def opcion_7(opcion_del_usuario):
+    if opcion_del_usuario == "7":
 
-# Menu principal
+        if not productos:
+            print("No hay productos")
+            return
+
+        ruta = input("Nombre del archivo: ")
+
+        try:
+            archivo = open(ruta, "w")
+
+            archivo.write("nombre,precio,cantidad\n")
+
+            for producto in productos:
+                archivo.write(f"{producto['nombre']},{producto['precio']},{producto['cantidad']}\n")
+
+            archivo.close()
+            print("Guardado")
+
+        except:
+            print("Error al guardar el archivo")
+
+
+# Cargar CSV
+def opcion_8(opcion_del_usuario):
+    if opcion_del_usuario == "8":
+
+        ruta = input("Nombre del archivo: ")
+
+        try:
+            archivo = open(ruta, "r")
+
+            lineas = archivo.readlines()
+            archivo.close()
+
+            productos.clear()
+
+            for linea in lineas[1:]:
+                datos = linea.strip().split(",")
+
+                producto = {
+                    "nombre": datos[0],
+                    "precio": float(datos[1]),
+                    "cantidad": int(datos[2])
+                }
+
+                productos.append(producto)
+
+            print("Cargado")
+
+        except:
+            print("Error al abrir el archivo")
+
+
+# MENU
 while True:
     print("\nMenu")
-    print("1. Agregar productos")
-    print("2. Ver productos")
-    print("3. Ver estadisticas")
-    print("4. Eliminar productos")
-    print("5. Buscar producto")
-    print("6. Actualizar producto")
+    print("1. Agregar")
+    print("2. Mostrar")
+    print("3. Estadisticas")
+    print("4. Eliminar")
+    print("5. Buscar")
+    print("6. Actualizar")
+    print("7. Guardar CSV")
+    print("8. Cargar CSV")
     print("0. Salir")
 
-    # Pedir opcion al usuario
-    menu_elegido = input("Ingrese una opcion: ")
+    menu_elegido = input("Opcion: ")
 
-    # Salir del programa
     if menu_elegido == "0":
-        print("Saliendo del programa...")
+        print("Saliendo...")
         break
 
-    # Llamar funciones segun opcion
     opcion_1(menu_elegido)
     opcion_2(menu_elegido)
     opcion_3(menu_elegido)
     opcion_4(menu_elegido)
     opcion_5(menu_elegido)
     opcion_6(menu_elegido)
-
-
-# Fin del programa
+    opcion_7(menu_elegido)
+    opcion_8(menu_elegido)
 
         
 
